@@ -1,0 +1,20 @@
+ARG base_img=vknstudy96/spark-py:spark331-Hadoop3-py
+
+FROM $base_img
+WORKDIR /
+
+# Reset to root to run installation tasks
+USER 0
+
+WORKDIR /opt/spark/work-dir
+
+COPY ./jars /opt/spark/jars
+
+COPY ./*.py ./
+
+WORKDIR /opt/spark/work-dir
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+
+# Specify the User that the actual main process will run as
+ARG spark_uid=185
+USER ${spark_uid}

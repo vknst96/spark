@@ -1,0 +1,59 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: myEksCluster
+  region: us-east-1
+
+availabilityZones: ["us-east-1a", "us-east-1b"]
+
+vpc:
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["all"]
+
+managedNodeGroups:
+
+  # Nodegroup used to run Spark driver on x86 based nodes with on-demand
+  - name: spark-driver-ng
+    instanceType: t2.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 1
+    availabilityZones: ["us-east-1a"]
+    privateNetworking: true
+    labels:
+      sparkrole: driver
+      noderole: spark
+    iam:
+      withAddonPolicies:
+        ebs: true
+        cloudWatch: true
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+
+  # Nodegroup used to run Spark executors
+  - name: spark-executor-ng
+    instanceType: t3.medium
+    desiredCapacity: 4
+    minSize: 1
+    maxSize: 4
+    availabilityZones: ["us-east-1a"]
+    privateNetworking: true
+    labels:
+      sparkrole: executor
+      noderole: spark
+    iam:
+      withAddonPolicies:
+        ebs: true
+        cloudWatch: true
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly

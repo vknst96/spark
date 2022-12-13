@@ -25,7 +25,7 @@ data:
         sparkrole: driver
       initContainers:
       - name: volume-permissions
-        image: public.ecr.aws/y4g4v0z7/busybox
+        image: busybox
         command: ['sh', '-c', 'mkdir /tmp/spark && chown -R 185 /tmp/spark']
   executor: |-
     apiVersion: v1
@@ -63,7 +63,7 @@ data:
             topologyKey: kubernetes.io/hostname
       initContainers:
       - name: volume-permissions
-        image: public.ecr.aws/y4g4v0z7/busybox
+        image: busybox
         command: ['sh', '-c', 'chown -R 185 /tmp/spark']
         volumeMounts:
         - mountPath: /tmp/spark
@@ -127,9 +127,9 @@ spec:
             --conf spark.hadoop.fs.s3a.aws.credentials.provider=com.amazonaws.auth.WebIdentityTokenCredentialsProvider \
             --conf spark.kubernetes.authenticate.submission.caCertFile=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
             --conf spark.kubernetes.authenticate.submission.oauthTokenFile=/var/run/secrets/kubernetes.io/serviceaccount/token \
-            --conf spark.kubernetes.file.upload.path=s3a://mysparkekssrc913/runtime
+            --conf spark.kubernetes.file.upload.path=s3a://mys3srcbkt1/runtime
             --py-files functions.py \
-            main.py s3a://mysparkekssrc913/restaurants/Restaurants_in_Wake_County.csv"
+            main.py s3a://mys3srcbkt1/restaurants/Restaurants_in_Wake_County.csv s3a://mys3srcbkt1/restaurants/Restaurants_in_Durham_County_NC.json"
           ]
           volumeMounts:
             - name: spark-pod-template

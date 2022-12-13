@@ -18,7 +18,8 @@ cloudWatch:
 
 managedNodeGroups:
 
-  # Nodegroup used to run Spark driver on x86 based nodes with on-demand
+  # Defining Nodegroup to be used for Spark driver.
+  # we are putting identifying labels, which will later be used in node selector for driver pod template defined in ConfigMap.
   - name: spark-driver-ng
     instanceType: t2.medium
     desiredCapacity: 1
@@ -38,7 +39,8 @@ managedNodeGroups:
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
 
-  # Nodegroup used to run Spark executors
+  # Defining Nodegroup to be used for Spark driver.
+  # we are putting identifying labels, which will later be used in node selector for driver pod template defined in ConfigMap.
   - name: spark-executor-ng
     instanceType: t3.medium
     desiredCapacity: 4

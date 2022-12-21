@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+spec:
+  tolerations:
+  - key: spot
+    operator: Equal
+    value: true
+    effect: NoSchedule
+  nodeSelector:
+    sparkrole: executor
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: spark/app
+            operator: In
+            values:
+            - spark-eks
+        topologyKey: topology.kubernetes.io/zone
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: spark/app
+            operator: NotIn
+            values:
+            - spark-eks
+          - key: spark/component
+            operator: In
+            values:
+            - executor
+        topologyKey: kubernetes.io/hostname
+  initContainers:
+  - name: volume-permissions
+    image: busybox
+    command: ['sh', '-c', 'chown -R 185 /tmp/spark']
+    volumeMounts:
+    - mountPath: /tmp/spark
+      name: spark-local-dir-1

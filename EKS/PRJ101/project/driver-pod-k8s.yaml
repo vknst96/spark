@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: driver
+spec:
+  nodeSelector:
+    sparkrole: driver
+  containers:
+    - name: driver
+      image: vknstudy96/pyspark-app:v1
+  initContainers:
+  - name: volume-permissions
+    image: busybox
+    command: ['sh', '-c', 'mkdir /tmp/spark && chown -R 185 /tmp/spark']

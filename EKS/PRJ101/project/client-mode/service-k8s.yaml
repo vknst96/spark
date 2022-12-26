@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    spark-app-selector: spark-app-spark-on-eks-client-mode-res1
+  name: spark-on-eks-client-mode-res1-svc
+  namespace: spark
+spec:
+  clusterIP: None
+  ports:
+  - name: driver-rpc-port
+    port: 7078
+    protocol: TCP
+    targetPort: 7078
+  - name: blockmanager
+    port: 7079
+    protocol: TCP
+    targetPort: 7079
+  - name: spark-ui
+    port: 4040
+    protocol: TCP
+    targetPort: 4040
+  selector:
+    spark-app-name: spark-on-eks-client-mode-res1
+    spark-app-selector: spark-app-spark-on-eks-client-mode-res1
+    spark-role: driver
+    spark-version: 3.3.1
+    spark/app: spark-eks
+    spark/component: driver
+  sessionAffinity: None
+  type: ClusterIP

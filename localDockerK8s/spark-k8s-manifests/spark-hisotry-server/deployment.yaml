@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-history-server
+  namespace: spark
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-history-server
+  template:
+    metadata:
+      labels:
+        app: spark-history-server
+    spec:
+      serviceAccountName: spark
+      containers:
+        - name: spark-history-server
+          image: vknstudy96/spark-py:spark355-Hadoop3AddedJars-py
+          command: ["/opt/spark/sbin/start-history-server.sh"]
+          env:
+            - name: SPARK_NO_DAEMONIZE
+              value: "true"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: AWS_SECRET_ACCESS_KEY
+          volumeMounts:
+            - name: spark-conf
+              mountPath: /opt/spark/conf/spark-defaults.conf
+              subPath: spark-defaults.conf
+          ports:
+            - containerPort: 18080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "0.5"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+      volumes:
+        - name: spark-conf
+          configMap:
+            name: spark-history-server-config
+            items:
+              - key: spark-defaults.conf
+                path: spark-defaults.conf

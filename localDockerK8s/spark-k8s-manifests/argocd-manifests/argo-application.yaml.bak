@@ -22,3 +22,6 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=false
+
+
+localDockerK8s\spark-k8s-manifests\spark-history-server

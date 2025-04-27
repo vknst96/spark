@@ -14,3 +14,5 @@ data:
     spark.history.retainedApplications=5
     spark.history.kerberos.enabled=false
     spark.security.credentials.hadoopfs.enabled=false
+    spark.hadoop.hadoop.security.authentication=simple
+    spark.hadoop.hadoop.security.authorization=false

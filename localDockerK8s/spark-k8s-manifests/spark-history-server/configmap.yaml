@@ -13,3 +13,4 @@ data:
     spark.history.fs.cleaner.maxAge=5d
     spark.history.retainedApplications=5
     spark.history.kerberos.enabled=false
+    spark.security.credentials.hadoopfs.enabled=false

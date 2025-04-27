@@ -33,10 +33,6 @@ spec:
                 secretKeyRef:
                   name: aws-credentials
                   key: AWS_SECRET_ACCESS_KEY
-            - name: HADOOP_USER_NAME
-              value: "spark"
-            - name: HADOOP_CONF_DIR
-              value: "/opt/spark/conf"
           volumeMounts:
             - name: spark-conf
               mountPath: /opt/spark/conf/spark-defaults.conf

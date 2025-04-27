@@ -20,7 +20,10 @@ spec:
             - name: discovery.type
               value: single-node
             - name: ELASTIC_PASSWORD
-              value: GagzUQis
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-secret
+                  key: ELASTIC_PASSWORD
             - name: xpack.security.enabled
               value: "false"
             - name: xpack.security.http.ssl.enabled

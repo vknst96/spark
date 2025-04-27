@@ -3,16 +3,20 @@ kind: Application
 metadata:
   name: elasticsearch
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: spark #this project is already defined during spark-hitory-server
   source:
-    repoURL: <your-git-repo-url>
-    path: <path-to-elasticsearch.yaml>
-    targetRevision: HEAD
+    repoURL: https://github.com/vknst96/spark.git #As this is public repo, no need to use ssh path, instead using https.
+    targetRevision: localDockerK8s
+    path: localDockerK8s/elasticsearch-k8s-manifests/elasticsearch-manifests
   destination:
-    server: https://kubernetes.default.svc
     namespace: elastic
+    server: https://kubernetes.default.svc
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

@@ -41,9 +41,6 @@ spec:
             - name: spark-conf
               mountPath: /opt/spark/conf/spark-defaults.conf
               subPath: spark-defaults.conf
-            - name: spark-conf
-              mountPath: /opt/spark/conf/core-site.xml
-              subPath: core-site.xml
           ports:
             - containerPort: 18080
           resources:
@@ -60,5 +57,3 @@ spec:
             items:
               - key: spark-defaults.conf
                 path: spark-defaults.conf
-              - key: core-site.xml
-                path: core-site.xml

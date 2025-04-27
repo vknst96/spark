@@ -17,6 +17,7 @@ spec:
       containers:
         - name: spark-history-server
           image: vknstudy96/spark-py:spark355-Hadoop3AddedJars-py-3
+          imagePullPolicy: Always
           command: ["/opt/spark/sbin/start-history-server.sh"]
           env:
             - name: SPARK_NO_DAEMONIZE
@@ -31,10 +32,17 @@ spec:
                 secretKeyRef:
                   name: aws-credentials
                   key: AWS_SECRET_ACCESS_KEY
+            - name: HADOOP_USER_NAME
+              value: "spark"
+            - name: HADOOP_CONF_DIR
+              value: "/opt/spark/conf"
           volumeMounts:
             - name: spark-conf
               mountPath: /opt/spark/conf/spark-defaults.conf
               subPath: spark-defaults.conf
+            - name: spark-conf
+              mountPath: /opt/spark/conf/core-site.xml
+              subPath: core-site.xml
           ports:
             - containerPort: 18080
           resources:
@@ -51,3 +59,5 @@ spec:
             items:
               - key: spark-defaults.conf
                 path: spark-defaults.conf
+              - key: core-site.xml
+                path: core-site.xml

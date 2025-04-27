@@ -8,7 +8,7 @@ metadata:
 spec:
   project: spark
   source:
-    repoURL: https://github.com/vknst96/spark.git #As this is public repo, no need to use ssh path.
+    repoURL: https://github.com/vknst96/spark.git #As this is public repo, no need to use ssh path, instead using https.
     # repoURL: git@github.com:vknst96/argocd.git
     targetRevision: localDockerK8s
     path: localDockerK8s/spark-k8s-manifests/spark-history-server

@@ -10,4 +10,6 @@ data:
     spark.hadoop.fs.s3a.endpoint=s3.amazonaws.com
     spark.history.fs.cleaner.enabled=true
     spark.history.fs.cleaner.interval=1d
-    spark.history.fs.cleaner.maxAge=7d
+    spark.history.fs.cleaner.maxAge=5d
+    spark.history.retainedApplications=5
+    spark.history.kerberos.enabled=false

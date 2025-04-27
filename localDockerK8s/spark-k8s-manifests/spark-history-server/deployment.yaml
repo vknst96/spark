@@ -16,7 +16,7 @@ spec:
       serviceAccountName: spark
       containers:
         - name: spark-history-server
-          image: vknstudy96/spark-py:spark355-Hadoop3AddedJars-py-3
+          image: vknstudy96/spark-py:spark355-Hadoop3AddedJars-py-5
           imagePullPolicy: Always
           command: ["/bin/sh", "-c", "sleep 3600"]
           #command: ["/opt/spark/sbin/start-history-server.sh"]

@@ -27,11 +27,11 @@ spec:
             - name: xpack.security.enabled
               value: "false"
             - name: xpack.security.http.ssl.enabled
-              value: false
+              value: "false"
             - name: xpack.license.self_generated.type
               value: basic
             - name: xpack.ml.use_auto_machine_memory_percent
-              value: false
+              value: "false"
             - name: ES_JAVA_OPTS
               value: -Xms128m -Xmx2g
             - name: cluster.name

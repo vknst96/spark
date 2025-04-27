@@ -12,39 +12,42 @@ spec:
 
   # Allow manifests to deploy from any Git repos
   sourceRepos:
-  - 'https://github.com/vknst96/spark.git'
+    - "https://github.com/vknst96/spark.git"
 
   # Only permit applications to deploy to the 'guestbook' namespace or any namespace starting with 'guestbook-' in the same cluster
   # Destination clusters can be identified by 'server', 'name', or both.
   destinations:
-  - namespace: spark
-    server: https://kubernetes.default.svc
-    name: in-cluster
+    - namespace: spark
+      server: https://kubernetes.default.svc
+      name: in-cluster
+    - namespace: elastic
+      server: https://kubernetes.default.svc
+      name: in-cluster
 
   # Deny all cluster-scoped resources from being created, except for Namespace
   clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
+    - group: ""
+      kind: Namespace
 
   # Allow all namespaced-scoped resources to be created, except for ResourceQuota, LimitRange, NetworkPolicy
   namespaceResourceBlacklist:
-  - group: ''
-    kind: ResourceQuota
-  - group: ''
-    kind: LimitRange
-  - group: ''
-    kind: NetworkPolicy
+    - group: ""
+      kind: ResourceQuota
+    - group: ""
+      kind: LimitRange
+    - group: ""
+      kind: NetworkPolicy
 
   # Deny all namespaced-scoped resources from being created, except for Deployment and StatefulSet
   namespaceResourceWhitelist:
-  - group: 'apps'
-    kind: Deployment
-  - group: 'apps'
-    kind: StatefulSet
-  - group: ''
-    kind: ConfigMap
-  - group: ''
-    kind: Service
+    - group: "apps"
+      kind: Deployment
+    - group: "apps"
+      kind: StatefulSet
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Service
 
   # Enables namespace orphaned resource monitoring.
   orphanedResources:
@@ -58,4 +61,4 @@ spec:
   # When using Applications-in-any-namespace, this field determines which namespaces this AppProject permits
   # Applications to reside in. Details: https://argo-cd.readthedocs.io/en/stable/operator-manual/app-any-namespace/
   sourceNamespaces:
-  - "argocd-apps-*"
+    - "argocd-apps-*"
